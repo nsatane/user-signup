@@ -30,9 +30,9 @@ def signup():
     email_error = ''
 
 #conditioning for username:
-    if Username == '': # validating username
+    if Username == "": # validating username
         user_error = "Please enter correct username"
-    elif  len(Username) <3 and len(Username)>20:
+    elif  len(Username) <3 or len(Username)>20:
         user_error = "The username must contain 3 to 20 character"
         Username = ''
     elif ' ' in Username :
@@ -40,9 +40,9 @@ def signup():
         Username = ''
 
 #conditioning for password:
-    if password == '': # validating password
+    if password == "": # validating password
         pass_error = "Please enter correct password"
-    elif  len(password) <3 and len(password)>20:
+    elif  len(password) <=3 or len(password)>=20:
         pass_error = "The password must contain 3 to 20 character"
         password = ''
     elif ' ' in password :
@@ -50,14 +50,16 @@ def signup():
         password = ''
 
 #conditioning for matching verify password and passwrod.
-    if v_pass == '' or v_pass != password :
-        verify_error = "Password does not match, please tray again!"
+    if v_pass == '':
+        verify_error = "Please enter correct matching password"
+    elif v_pass != password :
+        verify_error = "Password does not match, please try again!"
         v_pass = ''
 
 #email validation:
     if email != "": # Validate Email
         # Used regex for complete email validation.
-        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email) or (len(email)<3 or len(email)>20):
             email_error = "Not a valid email address."
 
 
@@ -66,8 +68,8 @@ def signup():
     else:
         return render_template(
             'index.html',
-            username = Username,
-            username_error = user_error,
+            Username = Username,
+            user_error = user_error,
             password = password,
             pass_error = pass_error, v_pass=v_pass,
             verify_error = verify_error,
